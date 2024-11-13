@@ -6,18 +6,9 @@ namespace ChatServer
 {
     public class EFBinaryRequestInfo : BinaryRequestInfo
     {
-        public Int16 Size
-        {
-            get; private set;
-        }
-        public Int16 PacketID
-        {
-            get; private set;
-        }
-        public SByte Type
-        {
-            get; private set;
-        }
+        public Int16 Size { get; private set; }
+        public Int16 PacketID { get; private set; }
+        public SByte Type { get; private set; }
 
         public EFBinaryRequestInfo(Int16 size, Int16 packetID, SByte type, byte[] body)
             : base(null, body)

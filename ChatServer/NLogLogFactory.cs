@@ -11,13 +11,6 @@
         public NLogLogFactory(string nlogConfig)
             : base(nlogConfig)
         {
-            if( !IsSharedConfig )
-            {
-                NLog.Config.XmlLoggingConfiguration.SetCandidateConfigFilePaths(new[] { ConfigFile });
-            }
-            else
-            {
-            }
         }
 
         public override SuperSocket.SocketBase.Logging.ILog GetLog(string name)

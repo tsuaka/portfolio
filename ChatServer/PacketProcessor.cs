@@ -4,7 +4,7 @@ namespace ChatServer
 {
     class PacketProcessor
     {
-        bool IsThreadRunning = false;
+        private bool IsThreadRunning = false;
         public Thread? ProcessThread = null;
 
         public BufferBlock<ServerPacketData> MsgBuffer = new();

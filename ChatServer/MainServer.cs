@@ -9,10 +9,10 @@ namespace ChatServer
         public static ChatServerOption ServerOption = null!;
         public static SuperSocket.SocketBase.Logging.ILog MainLogger = null!;
 
-        SuperSocket.SocketBase.Config.IServerConfig m_Config = null!;
+        private SuperSocket.SocketBase.Config.IServerConfig m_Config = null!;
 
-        PacketProcessor MainPacketProcessor = new PacketProcessor();
-        RoomManager RoomMgr = new RoomManager();
+        private PacketProcessor MainPacketProcessor = new PacketProcessor();
+        private RoomManager RoomMgr = new RoomManager();
 
 
         public MainServer()

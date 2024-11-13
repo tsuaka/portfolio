@@ -5,18 +5,12 @@ namespace ChatServer
 {
     public class Room
     {
-        public int Index
-        {
-            get; private set;
-        }
-        public int Number
-        {
-            get; private set;
-        }
+        public int Index { get; private set; }
+        public int Number { get; private set; }
 
         private int MaxUserCount = 0;
 
-        List<RoomUser> UserList = new List<RoomUser>();
+        List<RoomUser> UserList = new ();
 
         public static Func<string, byte[], bool> NetSendFunc = null!;
 
@@ -35,9 +29,9 @@ namespace ChatServer
                 return false;
             }
 
-            if( UserList.Count() >= MaxUserCount )
+            if( UserList.Count >= MaxUserCount )
             {
-                MainServer.MainLogger.Debug($"{nameof(AddUser)}. Room User Count Max. UserCount : {UserList.Count()}. MaxUserCount : {MaxUserCount}");
+                MainServer.MainLogger.Debug($"{nameof(AddUser)}. Room User Count Max. UserCount : {UserList.Count}. MaxUserCount : {MaxUserCount}");
                 return false;
             }
 
