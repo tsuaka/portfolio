@@ -29,9 +29,6 @@
 
     public enum PACKETID : int
     {
-        REQ_RES_TEST_ECHO = 101,
-
-
         // 클라이언트
         CS_BEGIN = 1001,
 

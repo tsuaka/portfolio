@@ -30,7 +30,7 @@ namespace ServerCommon
 
             if( bodyData != null )
             {
-                Buffer.BlockCopy(bodyData, 0, dataSource, 5, bodyDataSize);
+                Buffer.BlockCopy(bodyData, 0, dataSource, PacketDef.PACKET_HEADER_SIZE, bodyDataSize);
             }
 
             return dataSource;
