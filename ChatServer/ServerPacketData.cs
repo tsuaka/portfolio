@@ -8,7 +8,6 @@ namespace ChatServer
         public Int16 PacketSize;
         public string SessionID = string.Empty;
         public Int16 PacketID;
-        public SByte Type;
         public byte[] BodyData = null!;
 
 

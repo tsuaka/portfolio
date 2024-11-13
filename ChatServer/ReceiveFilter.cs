@@ -8,14 +8,12 @@ namespace ChatServer
     {
         public Int16 Size { get; private set; }
         public Int16 PacketID { get; private set; }
-        public SByte Type { get; private set; }
 
-        public EFBinaryRequestInfo(Int16 size, Int16 packetID, SByte type, byte[] body)
+        public EFBinaryRequestInfo(Int16 size, Int16 packetID, byte[] body)
             : base(null, body)
         {
             this.Size = size;
             this.PacketID = packetID;
-            this.Type = type;
         }
     }
 
@@ -44,7 +42,6 @@ namespace ChatServer
 
             return new EFBinaryRequestInfo(BitConverter.ToInt16(header.Array, 0),
                 BitConverter.ToInt16(header.Array, 2),
-                (SByte)header.Array[4],
                 bodyBuffer.CloneRange(offset, length));
         }
     }

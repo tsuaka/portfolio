@@ -6,7 +6,7 @@ namespace ServerCommon
 {
     public class PacketDef
     {
-        public const Int16 PACKET_HEADER_SIZE = 5;
+        public const Int16 PACKET_HEADER_SIZE = 4;
         public const int MAX_USER_ID_BYTE_LENGTH = 16;
         public const int MAX_USER_PW_BYTE_LENGTH = 16;
 
@@ -17,8 +17,6 @@ namespace ServerCommon
     {
         public static byte[] Make(PACKETID packetID, byte[] bodyData)
         {
-            byte type = 0;
-            var pktID = (Int16)packetID;
             Int16 bodyDataSize = 0;
             if( bodyData != null )
             {
@@ -28,8 +26,7 @@ namespace ServerCommon
 
             var dataSource = new byte[packetSize];
             Buffer.BlockCopy(BitConverter.GetBytes(packetSize), 0, dataSource, 0, 2);
-            Buffer.BlockCopy(BitConverter.GetBytes(pktID), 0, dataSource, 2, 2);
-            dataSource[4] = type;
+            Buffer.BlockCopy(BitConverter.GetBytes((Int16)packetID), 0, dataSource, 2, 2);
 
             if( bodyData != null )
             {

@@ -145,7 +145,6 @@ namespace ChatServer
             packet.SessionID = session.SessionID;
             packet.PacketSize = reqInfo.Size;
             packet.PacketID = reqInfo.PacketID;
-            packet.Type = reqInfo.Type;
             packet.BodyData = reqInfo.Body;
 
             Distribute(packet);
