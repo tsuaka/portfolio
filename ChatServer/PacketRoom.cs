@@ -5,7 +5,7 @@ using ServerCommon;
 
 namespace ChatServer
 {
-    public class PKHRoom : PKHandler
+    public class PacketRoom : PacketHandler
     {
         private List<Room> _roomList = new();
         private int _startRoomNumber;

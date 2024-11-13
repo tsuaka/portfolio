@@ -15,8 +15,8 @@ namespace ChatServer
         public List<Room> RoomList = new List<Room>();
 
         public Dictionary<int, Action<ServerPacketData>> PacketHandlerMap = new Dictionary<int, Action<ServerPacketData>>();
-        public PKHCommon CommonPacketHandler = new PKHCommon();
-        public PKHRoom RoomPacketHandler = new PKHRoom();
+        public PacketCommon CommonPacketHandler = new PacketCommon();
+        public PacketRoom RoomPacketHandler = new PacketRoom();
 
         public void CreateAndStart(List<Room> roomList, MainServer mainServer)
         {

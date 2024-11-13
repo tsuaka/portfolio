@@ -1,6 +1,6 @@
 ﻿namespace ChatServer
 {
-    public class PKHandler
+    public class PacketHandler
     {
         protected MainServer ServerNetwork = null!;
         protected UserManager UserMgr = null!;

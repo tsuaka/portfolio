@@ -5,7 +5,7 @@ using ServerCommon;
 
 namespace ChatServer
 {
-    public class PKHCommon : PKHandler
+    public class PacketCommon : PacketHandler
     {
         public void RegistPacketHandler(Dictionary<int, Action<ServerPacketData>> packetHandlerMap)
         {
