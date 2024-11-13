@@ -9,10 +9,10 @@ namespace ChatServer
         public static ChatServerOption ServerOption = null!;
         public static SuperSocket.SocketBase.Logging.ILog MainLogger = null!;
 
-        private SuperSocket.SocketBase.Config.IServerConfig m_Config = null!;
+        private SuperSocket.SocketBase.Config.IServerConfig _config = null!;
 
-        private PacketProcessor MainPacketProcessor = new PacketProcessor();
-        private RoomManager RoomMgr = new RoomManager();
+        private PacketProcessor _mainPacketProcessor = new PacketProcessor();
+        private RoomManager _roomMgr = new RoomManager();
 
 
         public MainServer()
@@ -27,7 +27,7 @@ namespace ChatServer
         {
             ServerOption = option;
 
-            m_Config = new SuperSocket.SocketBase.Config.ServerConfig
+            _config = new SuperSocket.SocketBase.Config.ServerConfig
             {
                 Name = option.Name,
                 Ip = "Any",
@@ -44,7 +44,7 @@ namespace ChatServer
         {
             try
             {
-                bool bResult = Setup(new SuperSocket.SocketBase.Config.RootConfig(), m_Config, logFactory: new NLogLogFactory());
+                bool bResult = Setup(new SuperSocket.SocketBase.Config.RootConfig(), _config, logFactory: new NLogLogFactory());
 
                 if( bResult == false )
                 {
@@ -74,16 +74,16 @@ namespace ChatServer
         {
             Stop();
 
-            MainPacketProcessor.Destory();
+            _mainPacketProcessor.Destory();
         }
 
         public ERROR_CODE CreateComponent()
         {
             Room.NetSendFunc = this.SendData;
-            RoomMgr.CreateRooms();
+            _roomMgr.CreateRooms();
 
-            MainPacketProcessor = new PacketProcessor();
-            MainPacketProcessor.CreateAndStart(RoomMgr.GetRoomsList(), this);
+            _mainPacketProcessor = new PacketProcessor();
+            _mainPacketProcessor.CreateAndStart(_roomMgr.GetRoomsList(), this);
 
             if( MainLogger != null )
             {
@@ -118,7 +118,7 @@ namespace ChatServer
 
         public void Distribute(ServerPacketData requestPacket)
         {
-            MainPacketProcessor.InsertPacket(requestPacket);
+            _mainPacketProcessor.InsertPacket(requestPacket);
         }
 
         void OnConnected(ClientSession session)

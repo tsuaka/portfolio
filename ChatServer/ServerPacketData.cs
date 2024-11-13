@@ -10,7 +10,6 @@ namespace ChatServer
         public Int16 PacketID;
         public byte[] BodyData = null!;
 
-
         public void Assign(string sessionID, Int16 packetID, byte[] packetBodyData)
         {
             SessionID = sessionID;

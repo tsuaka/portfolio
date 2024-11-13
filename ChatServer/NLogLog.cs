@@ -2,7 +2,7 @@
 {
     public class NLogLog : SuperSocket.SocketBase.Logging.ILog
     {
-        private NLog.ILogger Log;
+        private NLog.ILogger _log;
 
         public NLogLog(NLog.ILogger log)
         {
@@ -11,14 +11,14 @@
                 throw new ArgumentNullException("log");
             }
 
-            Log = log;
+            _log = log;
         }
 
         public bool IsDebugEnabled
         {
             get
             {
-                return Log.IsDebugEnabled;
+                return _log.IsDebugEnabled;
             }
         }
 
@@ -26,7 +26,7 @@
         {
             get
             {
-                return Log.IsErrorEnabled;
+                return _log.IsErrorEnabled;
             }
         }
 
@@ -34,7 +34,7 @@
         {
             get
             {
-                return Log.IsFatalEnabled;
+                return _log.IsFatalEnabled;
             }
         }
 
@@ -42,7 +42,7 @@
         {
             get
             {
-                return Log.IsInfoEnabled;
+                return _log.IsInfoEnabled;
             }
         }
 
@@ -50,43 +50,43 @@
         {
             get
             {
-                return Log.IsWarnEnabled;
+                return _log.IsWarnEnabled;
             }
         }
 
         public void Debug(string message)
         {
-            Log.Debug(message);
+            _log.Debug(message);
         }
 
         public void Error(string message)
         {
-            Log.Error(message);
+            _log.Error(message);
         }
 
         public void Error(string message, Exception exception)
         {
-            Log.Error($"msg:{message}, exception:{exception.ToString()}");
+            _log.Error($"msg:{message}, exception:{exception.ToString()}");
         }
 
         public void Fatal(string message)
         {
-            Log.Fatal(message);
+            _log.Fatal(message);
         }
 
         public void Fatal(string message, Exception exception)
         {
-            Log.Fatal($"msg:{message}, exception:{exception.ToString()}");
+            _log.Fatal($"msg:{message}, exception:{exception.ToString()}");
         }
 
         public void Info(string message)
         {
-            Log.Info(message);
+            _log.Info(message);
         }
 
         public void Warn(string message)
         {
-            Log.Warn(message);
+            _log.Warn(message);
         }
 
 

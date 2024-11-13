@@ -7,13 +7,13 @@ namespace ChatServer
 {
     public class PKHRoom : PKHandler
     {
-        List<Room> RoomList = new();
-        int StartRoomNumber;
+        private List<Room> _roomList = new();
+        private int _startRoomNumber;
 
         public void SetRooomList(List<Room> roomList)
         {
-            RoomList = roomList;
-            StartRoomNumber = roomList[0].Number;
+            _roomList = roomList;
+            _startRoomNumber = roomList[0].Number;
         }
 
         public void RegistPacketHandler(Dictionary<int, Action<ServerPacketData>> packetHandlerMap)
@@ -27,14 +27,14 @@ namespace ChatServer
 
         Room? GetRoom(int roomNumber)
         {
-            var index = roomNumber - StartRoomNumber;
+            var index = roomNumber - _startRoomNumber;
 
-            if( index < 0 || index >= RoomList.Count() )
+            if( index < 0 || index >= _roomList.Count() )
             {
                 return null;
             }
 
-            return RoomList[index];
+            return _roomList[index];
         }
 
         (bool, Room?, RoomUser?) CheckRoomAndRoomUser(string userNetSessionID)

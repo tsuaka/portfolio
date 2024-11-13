@@ -8,9 +8,9 @@ namespace ChatServer
         public int Index { get; private set; }
         public int Number { get; private set; }
 
-        private int MaxUserCount = 0;
+        private int _maxUserCount = 0;
 
-        List<RoomUser> UserList = new ();
+        private List<RoomUser> _userList = new ();
 
         public static Func<string, byte[], bool> NetSendFunc = null!;
 
@@ -19,7 +19,7 @@ namespace ChatServer
         {
             Index = index;
             Number = number;
-            MaxUserCount = maxUserCount;
+            _maxUserCount = maxUserCount;
         }
 
         public bool AddUser(string userID, string netSessionID)
@@ -29,49 +29,49 @@ namespace ChatServer
                 return false;
             }
 
-            if( UserList.Count >= MaxUserCount )
+            if( _userList.Count >= _maxUserCount )
             {
-                MainServer.MainLogger.Debug($"{nameof(AddUser)}. Room User Count Max. UserCount : {UserList.Count}. MaxUserCount : {MaxUserCount}");
+                MainServer.MainLogger.Debug($"{nameof(AddUser)}. Room User Count Max. UserCount : {_userList.Count}. MaxUserCount : {_maxUserCount}");
                 return false;
             }
 
             var roomUser = new RoomUser();
             roomUser.Set(userID, netSessionID);
-            UserList.Add(roomUser);
+            _userList.Add(roomUser);
 
             return true;
         }
 
         public void RemoveUser(string netSessionID)
         {
-            var index = UserList.FindIndex(x => x.NetSessionID == netSessionID);
-            UserList.RemoveAt(index);
+            var index = _userList.FindIndex(x => x.NetSessionID == netSessionID);
+            _userList.RemoveAt(index);
         }
 
         public bool RemoveUser(RoomUser user)
         {
-            return UserList.Remove(user);
+            return _userList.Remove(user);
         }
 
         public RoomUser? GetUser(string userID)
         {
-            return UserList.Find(x => x.UserID == userID);
+            return _userList.Find(x => x.UserID == userID);
         }
 
         public RoomUser? GetUserByNetSessionId(string netSessionID)
         {
-            return UserList.Find(x => x.NetSessionID == netSessionID);
+            return _userList.Find(x => x.NetSessionID == netSessionID);
         }
 
         public int CurrentUserCount()
         {
-            return UserList.Count();
+            return _userList.Count();
         }
 
         public void NotifyPacketUserList(string userNetSessionID)
         {
             var packet = new PKTNtfRoomUserList();
-            foreach( var user in UserList )
+            foreach( var user in _userList )
             {
                 packet.UserIDList.Add(user.UserID);
             }
@@ -111,7 +111,7 @@ namespace ChatServer
 
         public void Broadcast(string excludeNetSessionID, byte[] sendPacket)
         {
-            foreach( var user in UserList )
+            foreach( var user in _userList )
             {
                 if( user.NetSessionID == excludeNetSessionID )
                 {

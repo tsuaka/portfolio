@@ -2,7 +2,7 @@
 {
     class RoomManager
     {
-        private readonly List<Room> RoomsList = new List<Room>();
+        private readonly List<Room> _roomList = new List<Room>();
 
         public void CreateRooms()
         {
@@ -16,13 +16,13 @@
                 var room = new Room();
                 room.Init(i, roomNumber, maxUserCount);
 
-                RoomsList.Add(room);
+                _roomList.Add(room);
             }
         }
 
         public List<Room> GetRoomsList()
         {
-            return RoomsList;
+            return _roomList;
         }
     }
 }

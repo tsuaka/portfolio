@@ -4,7 +4,7 @@ namespace ChatServer
 {
     class PacketProcessor
     {
-        private bool IsThreadRunning = false;
+        private bool _isThreadRunning = false;
         public Thread? ProcessThread = null;
 
         public BufferBlock<ServerPacketData> MsgBuffer = new();
@@ -30,14 +30,14 @@ namespace ChatServer
 
             RegistPacketHandler(mainServer);
 
-            IsThreadRunning = true;
+            _isThreadRunning = true;
             ProcessThread = new Thread(this.Process);
             ProcessThread.Start();
         }
 
         public void Destory()
         {
-            IsThreadRunning = false;
+            _isThreadRunning = false;
             MsgBuffer.Complete();
         }
 
@@ -59,7 +59,7 @@ namespace ChatServer
 
         void Process()
         {
-            while( IsThreadRunning )
+            while( _isThreadRunning )
             {
                 try
                 {
@@ -76,7 +76,7 @@ namespace ChatServer
                 }
                 catch( Exception ex )
                 {
-                    IsThreadRunning.IfTrue(() => MainServer.MainLogger!.Error(ex.ToString()));
+                    _isThreadRunning.IfTrue(() => MainServer.MainLogger!.Error(ex.ToString()));
                 }
             }
         }
