@@ -219,11 +219,11 @@ namespace ChatClient2
             listBoxChat.Items.Clear();
         }
 
-        void RequestLogin(string userID, string authToken)
+        void RequestLogin(string userID)
         {
             DevLog.Write("서버에 로그인 요청", LOG_LEVEL.INFO);
 
-            var reqLogin = new PKTReqLogin() { UserID = userID, AuthToken = authToken };
+            var reqLogin = new PKTReqLogin() { UserID = userID };
 
             var Body = MessagePackSerializer.Serialize(reqLogin);
             var sendData = PacketToBytes.Make(PACKETID.REQ_LOGIN, Body);
@@ -367,7 +367,7 @@ namespace ChatClient2
         {
             if( _clientState == CLIENT_STATE.CONNECTED )
             {
-                RequestLogin(textBoxID.Text, textBoxPW.Text);
+                RequestLogin(textBoxID.Text);
             }
             else if( _clientState == CLIENT_STATE.LOGIN )
             {

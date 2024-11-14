@@ -55,8 +55,6 @@ namespace ServerCommon
     {
         [Key(0)]
         public string UserID { get; set; } = string.Empty;
-        [Key(1)]
-        public string AuthToken { get; set; } = string.Empty;
     }
 
     [MessagePackObject]

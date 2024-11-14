@@ -45,7 +45,7 @@ namespace ChatServer
                     ServerNetwork.Distribute(internalPacket);
                 }
 
-                UserMgr.RemoveUser(sessionID);
+                UserMgr.RemoveUser(sessionID, user.GetUserID());
             }
 
             MainServer.MainLogger.Debug($"Current Connected Session Count: {ServerNetwork.SessionCount}");

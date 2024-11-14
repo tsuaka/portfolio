@@ -4,14 +4,15 @@ namespace ChatServer
 {
     public class UserManager
     {
-        private int MaxUserCount;
-        private UInt64 UserSequenceNumber = 0;
+        private int _maxUserCount;
+        private UInt64 _userSequenceNumber = 0;
 
-        private readonly Dictionary<string, User> UserMap = new ();
+        private readonly Dictionary<string, User> _userMap = new ();
+        private readonly List<string> _userIDList = new();
 
         public void Init(int maxUserCount)
         {
-            MaxUserCount = maxUserCount;
+            _maxUserCount = maxUserCount;
         }
 
         public ERROR_CODE AddUser(string userID, string sessionID)
@@ -21,40 +22,58 @@ namespace ChatServer
                 return ERROR_CODE.LOGIN_FULL_USER_COUNT;
             }
 
-            if( UserMap.ContainsKey(sessionID) )
+            if( _userMap.ContainsKey(sessionID) )
             {
-                return ERROR_CODE.ADD_USER_DUPLICATION;
+                return ERROR_CODE.ADD_USER_DUPLICATE_SESSION;
+            }
+
+            if( !CheckUserID(userID) )
+            {
+                return ERROR_CODE.ADD_USER_DUPLICATE_USERID;
             }
 
 
-            ++UserSequenceNumber;
+            ++_userSequenceNumber;
 
             var user = new User();
-            user.Set(UserSequenceNumber, sessionID, userID);
-            UserMap.Add(sessionID, user);
+            user.Set(_userSequenceNumber, sessionID, userID);
+            _userMap.Add(sessionID, user);
+            _userIDList.Add(userID);
 
             return ERROR_CODE.NONE;
         }
 
-        public ERROR_CODE RemoveUser(string sessionID)
+        public ERROR_CODE RemoveUser(string sessionID, string userID)
         {
-            if( UserMap.Remove(sessionID) == false )
+            if( _userMap.Remove(sessionID) == false )
             {
                 return ERROR_CODE.REMOVE_USER_SEARCH_FAILURE_USER_ID;
             }
+
+            _userIDList.Remove(userID);
 
             return ERROR_CODE.NONE;
         }
 
         public User? GetUser(string sessionID)
         {
-            UserMap.TryGetValue(sessionID, out var user);
+            _userMap.TryGetValue(sessionID, out var user);
             return user;
         }
 
-        bool IsFullUserCount()
+        public bool CheckUserID(string userID)
         {
-            return MaxUserCount <= UserMap.Count;
+            if( _userIDList.Contains(userID) )
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool IsFullUserCount()
+        {
+            return _maxUserCount <= _userMap.Count;
         }
 
     }
