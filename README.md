@@ -20,10 +20,6 @@
 dotnet add package MessagePack --version 2.5.192
 ```
 
-## SuperSocketLite 채팅 서버
-
-`SuperSocketLite`를 사용하여 채팅 서버를 구현하고, `MessagePack`을 이용해 데이터를 직렬화 및 역직렬화하여 메시지를 효율적으로 전송합니다.
-
 ## 실행 방법
 
 ### 1. 서버 실행
